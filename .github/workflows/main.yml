@@ -2,17 +2,16 @@ name: Snyk Infrastructure as Code Security Scan
 
 on:
   push:
-  workflow_dispatch:
 
 jobs:
   snyk-iac-security:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run Snyk to check Infrastructure as Code files for issues
-        continue-on-error: true
+      - name: Snyk IAC
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: k8s/
+          args: --severity-threshold=high
